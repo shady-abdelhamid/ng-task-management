@@ -1,17 +1,10 @@
 <mat-toolbar color="primary">
-  <span routerLink="/">{{ title }}</span>
+  <div routerLink="/">{{ title }}</div>
   <span class="fill-remaining-space"></span>
-  <button mat-button [matMenuTriggerFor]="menu">[username]</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/tasks">
-      <mat-icon>assignment_turned_in</mat-icon>
-      Tasks
-    </button>
-  <mat-divider></mat-divider>
-  <button mat-menu-item>
-      <mat-icon>exit_to_app</mat-icon>
-      logout
-  </button>
-</mat-menu>
+  <div routerLink="/signup">Signup</div>
+  &nbsp;
+  <div routerLink="/login">Login</div>
+  &nbsp;
+  <div routerLink="/tasks">Tasks</div>
 </mat-toolbar>
 <router-outlet></router-outlet>
