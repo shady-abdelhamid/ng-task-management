@@ -28,4 +28,8 @@ export class TaskListComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
   }
+
+  isEmpty() {
+    return this.dataSource.data.length<1
+  }
 }

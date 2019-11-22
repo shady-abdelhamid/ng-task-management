@@ -1,3 +1,9 @@
 .full-width-table {
   width: 100%;
 }
+
+.task-list {
+  &__empty-msg {
+    text-align: center
+    }
+}
