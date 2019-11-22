@@ -1,7 +1,13 @@
 
 <mat-toolbar>
-    <mat-toolbar-row>
+    <mat-toolbar-row fxLayout="row">
       <span>Get things done.</span>
+      <button 
+        mat-button 
+        color="primary">
+        <mat-icon>add</mat-icon>
+        CREATE TASK
+      </button>
     </mat-toolbar-row>
 </mat-toolbar>
 <router-outlet></router-outlet>
