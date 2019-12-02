@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { Task, TaskStatus } from '../task.model';
+import { TasksService } from '../tasks.service';
 
 const EXAMPLE_DATA: Task[] = [
   {id: 1, title: 'Study English', description:'Practice writing essays', status: TaskStatus.OPEN},
@@ -18,12 +19,17 @@ const EXAMPLE_DATA: Task[] = [
  * (including sorting, pagination, and filtering).
  */
 export class TaskListDataSource extends DataSource<Task> {
-  data: Task[] = EXAMPLE_DATA;
+  data: Task[] = [];
   paginator: MatPaginator;
   sort: MatSort;
 
-  constructor() {
+  constructor(private tasksService: TasksService) {
     super();
+
+    this.tasksService.getTasks()
+      .subscribe( tasks => {
+        this.data = tasks
+      })
   }
 
   /**

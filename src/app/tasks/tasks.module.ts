@@ -8,6 +8,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MaterialModule } from '../material.module';
 import { TaskListComponent } from './task-list/task-list.component';
+import { TasksService } from './tasks.service';
 
 
 @NgModule({
@@ -16,6 +17,9 @@ import { TaskListComponent } from './task-list/task-list.component';
     CommonModule,
     TasksRoutingModule,
     MaterialModule
+  ],
+  providers: [
+    TasksService
   ]
 })
 export class TasksModule { }

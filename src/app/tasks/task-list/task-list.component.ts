@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { TaskListDataSource } from './task-list-datasource';
 import { Task } from '../task.model';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'tm-task-list',
@@ -19,8 +20,9 @@ export class TaskListComponent implements AfterViewInit, OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['title', 'description', 'status'];
 
+  constructor(private tasksService: TasksService) {}
   ngOnInit() {
-    this.dataSource = new TaskListDataSource();
+    this.dataSource = new TaskListDataSource(this.tasksService);
   }
 
   ngAfterViewInit() {
@@ -30,6 +32,6 @@ export class TaskListComponent implements AfterViewInit, OnInit {
   }
 
   isEmpty() {
-    return this.dataSource.data.length<1
+    return this.dataSource.data.length<1;
   }
 }
