@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Create Task</h1>
+<div mat-dialog-content>
+  <p>What task do you want to add?</p>
+  <mat-form-field>
+    <input matInput placeholder="Title" />
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Description"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+
+  <button
+    mat-button
+    (click)="onOkClick()"
+    [mat-dialog-close]="data.animal"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
+</div>
