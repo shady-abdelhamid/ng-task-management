@@ -6,13 +6,6 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 import { Task, TaskStatus } from '../task.model';
 import { TasksService } from '../tasks.service';
 
-const EXAMPLE_DATA: Task[] = [
-  {id: 1, title: 'Study English', description:'Practice writing essays', status: TaskStatus.OPEN},
-  {id: 2, title: 'Study English', description:'Practice Reading articles', status: TaskStatus.OPEN},
-  {id: 3, title: 'Study English', description:'Practice Listening to news brief', status: TaskStatus.OPEN},
-  {id: 4, title: 'Study English', description:'Practice speaking by recording', status: TaskStatus.OPEN},
-];
-
 /**
  * Data source for the TaskList view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
@@ -26,7 +19,7 @@ export class TaskListDataSource extends DataSource<Task> {
   constructor(private tasksService: TasksService) {
     super();
 
-    this.tasksService.getTasks()
+    this.tasksService.getAll()
       .subscribe( tasks => {
         this.data = tasks
       })
@@ -40,6 +33,11 @@ export class TaskListDataSource extends DataSource<Task> {
   connect(): Observable<Task[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
+    this.tasksService.getAll()
+      .subscribe( tasks => {
+        this.data = tasks
+      });
+      
     const dataMutations = [
       observableOf(this.data),
       this.paginator.page,

@@ -7,6 +7,7 @@ import { TasksService } from './tasks.service';
 import { TasksComponent } from './tasks.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dial
     TaskListComponent, CreateTaskDialogComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     TasksRoutingModule,
     MaterialModule
   ],
