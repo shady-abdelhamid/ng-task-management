@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'tm-tasks',
@@ -9,16 +7,5 @@ import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dial
 })
 export class TasksComponent {
  
-  constructor(public dialog: MatDialog) {}
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CreateTaskDialogComponent, {
-      width: '270px',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
-  }
+  constructor() {}
 }

@@ -1,6 +1,18 @@
 <section class="task-list">
-
+  <mat-toolbar>
+    <mat-toolbar-row fxLayout="row">
+      <span>Get things done.</span>
+      <button mat-button color="primary" (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+        CREATE TASK
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
   <div *ngIf="!isEmpty(); else emptyMsg" class="mat-elevation-z8">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
     <table mat-table class="full-width-table" matSort aria-label="Elements">
       <!-- Title Column -->
       <ng-container matColumnDef="title">

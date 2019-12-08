@@ -15,6 +15,7 @@ export class TaskListDataSource extends DataSource<Task> {
   data: Task[] = [];
   paginator: MatPaginator;
   sort: MatSort;
+  filter: string;
 
   constructor(private tasksService: TasksService) {
     super();
