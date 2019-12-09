@@ -1,6 +1,6 @@
 
 export class Task {
-    id?: number;
+    id: string;
 
     title: string;
 

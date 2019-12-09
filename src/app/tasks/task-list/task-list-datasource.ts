@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
+import { Observable, of as observableOf, merge, BehaviorSubject } from 'rxjs';
 import { Task, TaskStatus } from '../task.model';
 import { TasksService } from '../tasks.service';
 
@@ -12,20 +12,20 @@ import { TasksService } from '../tasks.service';
  * (including sorting, pagination, and filtering).
  */
 export class TaskListDataSource extends DataSource<Task> {
-  data: Task[] = [];
+  dataStream: BehaviorSubject<Task[]>;
   paginator: MatPaginator;
   sort: MatSort;
   filter: string;
 
-  constructor(private tasksService: TasksService) {
+  set data(v: Task[]) { this.dataStream.next(v); }
+  get data(): Task[] { return this.dataStream.value; }
+
+  constructor(private tasks: Task[]) {
     super();
-
-    this.tasksService.getAll()
-      .subscribe( tasks => {
-        this.data = tasks
-      })
+    this.dataStream = new BehaviorSubject<Task[]>(tasks);
+    this.data = tasks;
   }
-
+  
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
@@ -34,16 +34,12 @@ export class TaskListDataSource extends DataSource<Task> {
   connect(): Observable<Task[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
-    this.tasksService.getAll()
-      .subscribe( tasks => {
-        this.data = tasks
-      });
       
     const dataMutations = [
-      observableOf(this.data),
-      this.paginator.page,
-      this.sort.sortChange
-    ];
+        this.dataStream,
+        this.paginator.page,
+        this.sort.sortChange
+      ];
 
     return merge(...dataMutations).pipe(map(() => {
       return this.getPagedData(this.getSortedData([...this.data]));

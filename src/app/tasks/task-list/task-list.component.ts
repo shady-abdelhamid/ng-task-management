@@ -26,7 +26,9 @@ export class TaskListComponent implements AfterViewInit, OnInit {
     private tasksService: TasksService,
     public dialog: MatDialog) {}
   ngOnInit() {
-    this.dataSource = new TaskListDataSource(this.tasksService);
+  this.tasksService.getAll().subscribe(tasks => {
+    this.dataSource = new TaskListDataSource(tasks);
+  });
   }
 
   ngAfterViewInit() {
@@ -52,6 +54,10 @@ export class TaskListComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       
+      // refresh datasource
+      this.tasksService.getAll().subscribe(tasks => {
+        this.dataSource.data = tasks;
+      });
     });
   }
 }
