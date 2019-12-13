@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { TaskListDataSource } from './task-list-datasource';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Task } from '../task.model';
 import { TasksService } from '../tasks.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,9 +16,8 @@ export class TaskListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatTable, {static: false}) table: MatTable<Task>;
-  dataSource: TaskListDataSource;
-
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  
+  dataSource = new MatTableDataSource<Task>();
   displayedColumns = ['title', 'description', 'status'];
 
   constructor(
@@ -27,7 +25,7 @@ export class TaskListComponent implements AfterViewInit, OnInit {
     public dialog: MatDialog) {}
   ngOnInit() {
   this.tasksService.getAll().subscribe(tasks => {
-    this.dataSource = new TaskListDataSource(tasks);
+    this.dataSource.data = tasks;
   });
   }
 
@@ -37,6 +35,12 @@ export class TaskListComponent implements AfterViewInit, OnInit {
     this.table.dataSource = this.dataSource;
   }
 
+  /**
+   * a function which apply filter each 
+   * time user type in search field.
+   * @param filterValue a search term 
+   * to search table.
+   */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
