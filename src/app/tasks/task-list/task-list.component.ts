@@ -73,8 +73,8 @@ export class TaskListComponent implements AfterViewInit, OnInit {
     });
   }
 
-  changeStatus(event: MatSelectChange): void {
-      console.log(event);
-      // TODO: update task's status through service  
+  changeStatus(id: string, event: MatSelectChange): void {
+      this.tasksService.updateTaskStatus(id, event.value)
+        .subscribe(task => console.log(task));  
   }
 }

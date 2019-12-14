@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Task, TaskStatus } from './task.model';
 import * as uuid from 'uuid';
+import { TASKS } from '../api.defines';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,8 @@ export class TasksService {
   }
 
   getAll (): Observable<Task[]> {
+    const url = TASKS.GET_ALL;
+    
     return of(this.tasks);
   }
 
@@ -33,5 +36,22 @@ export class TasksService {
     this.tasks.push(task);
     
     return of(task);
+  }
+
+  updateTaskStatus(id: string, status: TaskStatus) {
+    const url = TASKS.UPDATE_TASK_STATUS.replace(/{id}/, id);
+    
+    const found = this.tasks.find(task => task.id === id);
+    const index = this.tasks.indexOf(found);
+
+    if (!found) {
+      return of(null);
+    }
+    found.status = status;
+    this.tasks.splice(index,1,found);
+    
+    return of(found);
+
+
   }
 }
