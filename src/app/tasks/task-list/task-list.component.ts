@@ -2,10 +2,11 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { Task } from '../task.model';
+import { Task, TaskStatus } from '../task.model';
 import { TasksService } from '../tasks.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'tm-task-list',
@@ -20,10 +21,17 @@ export class TaskListComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<Task>();
   displayedColumns = ['title', 'description', 'status'];
 
+  public readonly allowedStatuses = [
+    TaskStatus.OPEN,
+    TaskStatus.IN_PROGRESS,
+    TaskStatus.DONE,
+  ];
+  
   constructor(
     private tasksService: TasksService,
     public dialog: MatDialog) {}
-  ngOnInit() {
+  
+    ngOnInit() {
   this.tasksService.getAll().subscribe(tasks => {
     this.dataSource.data = tasks;
   });
@@ -63,5 +71,10 @@ export class TaskListComponent implements AfterViewInit, OnInit {
         this.dataSource.data = tasks;
       });
     });
+  }
+
+  changeStatus(event: MatSelectChange): void {
+      console.log(event);
+      // TODO: update task's status through service  
   }
 }
