@@ -8,7 +8,7 @@ import { TASKS } from '../api.defines';
   providedIn: 'root'
 })
 export class TasksService {
-
+  
   private tasks: Task[] = [
     {id: '3e41aba0-2789-4b38-844e-67edfe7d4cde', title: 'Study English', description:'Practice writing essays', status: TaskStatus.OPEN},
     {id: 'c029d609-69a4-4095-b907-76072143e176', title: 'Study English', description:'Practice Reading articles', status: TaskStatus.OPEN},
@@ -20,13 +20,15 @@ export class TasksService {
     
   }
 
-  getAll (): Observable<Task[]> {
-    const url = TASKS.GET_ALL;
+  public getAll (): Observable<Task[]> {
+    const url = TASKS.GET_TASKS;
     
     return of(this.tasks);
   }
 
-  add (title: string, description: string): Observable<Task> {
+  public add (title: string, description: string): Observable<Task> {
+    const url = TASKS.POST_TASK;
+    
     const task: Task = {
       id: uuid.v4(),
       title,
@@ -38,8 +40,8 @@ export class TasksService {
     return of(task);
   }
 
-  updateTaskStatus(id: string, status: TaskStatus) {
-    const url = TASKS.UPDATE_TASK_STATUS.replace(/{id}/, id);
+  public updateTaskStatus(id: string, status: TaskStatus) {
+    const url = TASKS.PATCH_TASK_STATUS.replace(/{id}/, id);
     
     const found = this.tasks.find(task => task.id === id);
     const index = this.tasks.indexOf(found);
@@ -51,7 +53,20 @@ export class TasksService {
     this.tasks.splice(index,1,found);
     
     return of(found);
+  }
 
+  public delete(id: string) {
+    const url = TASKS.DELETE_TASK.replace(/{id}/, id);
+    
+    const found = this.tasks.find(task => task.id === id);
+    const index = this.tasks.indexOf(found);
 
+    if (!found) {
+      return of(null);
+    }
+
+    this.tasks.splice(this.tasks.indexOf(found),1);
+    
+    return of(found);
   }
 }
