@@ -7,6 +7,7 @@ import { TasksService } from '../tasks.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
 import { MatSelectChange } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'tm-task-list',
@@ -32,6 +33,7 @@ export class TaskListComponent implements AfterViewInit, OnInit {
   
   constructor(
     private tasksService: TasksService,
+    private _snackBar: MatSnackBar,
     public dialog: MatDialog) {}
   
     ngOnInit() {
@@ -92,9 +94,17 @@ export class TaskListComponent implements AfterViewInit, OnInit {
    * @param id a task id which is used to identify the task that should be deleted
    */
   delete(id: string): void {
-    this.tasksService.delete(id);
+    this.tasksService.delete(id).subscribe(task => {
+      this._snackBar.open(`${task.title} has been removed`,null,{
+        duration: 3000,
+      });
+    });
     this.tasksService.getAll().subscribe(tasks => {
         this.dataSource.data = tasks;
       });  
+  }
+
+  openSnackBar() {
+    
   }
 }
