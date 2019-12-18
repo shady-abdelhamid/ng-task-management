@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Task, TaskStatus } from './task.model';
 import * as uuid from 'uuid';
-import { TASKS } from '../api.defines';
+import { TASKS } from '../constants/api.defines';
 
 @Injectable({
   providedIn: 'root'

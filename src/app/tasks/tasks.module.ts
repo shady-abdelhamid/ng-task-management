@@ -8,6 +8,7 @@ import { TasksComponent } from './tasks.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -15,10 +16,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     TasksComponent, 
     TaskListComponent, CreateTaskDialogComponent],
   imports: [
-    CommonModule,
+    SharedModule,
     ReactiveFormsModule,
     TasksRoutingModule,
-    MaterialModule
   ],
   providers: [
     TasksService
