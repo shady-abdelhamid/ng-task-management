@@ -3,15 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  { 
-    path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule) 
-  },
   {
     path: '',
-    redirectTo: '',
+    redirectTo: 'tasks',
     pathMatch: 'full'
   },
-  { path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule) }
+  { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
+  { path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule) },
 ];
 
 @NgModule({
